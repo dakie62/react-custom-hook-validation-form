@@ -7,9 +7,13 @@ const Form = () => {
   const [nameInputState, setNameInput] = useState("");
   const [firstNameInputState, setFirstNameInput] = useState("");
 
+  const [isNameTouched, setNameTouched] = useState(false);
+  const [isFirstNameTouched, setFirstNameTouched] = useState(false);
+
   // deriving state
-  const isErrorName = validateInput(nameInputState);
-  const isErrorFirstName = validateInput(firstNameInputState);
+  const isErrorName = validateInput(nameInputState) && isNameTouched;
+  const isErrorFirstName =
+    validateInput(firstNameInputState) && isFirstNameTouched;
 
   const onSubmitForm = (event) => {
     event.preventDefault();
@@ -28,6 +32,14 @@ const Form = () => {
     setFirstNameInput(event.target.value);
   };
 
+  const onBlurNameHandler = (event) => {
+    setNameTouched(true);
+  };
+
+  const onBlurFirstNameHandler = (event) => {
+    setFirstNameTouched(true);
+  };
+  
   return (
     <form className={styles["form-group"]} onSubmit={onSubmitForm}>
       <div
@@ -38,7 +50,12 @@ const Form = () => {
         }
       >
         <label htmlFor="Nom">Nom</label>
-        <input id="Nom" type="text" onChange={onChangeNameInputHandler}></input>
+        <input
+          id="Nom"
+          type="text"
+          onChange={onChangeNameInputHandler}
+          onBlur={onBlurNameHandler}
+        ></input>
       </div>
 
       <div
@@ -53,6 +70,7 @@ const Form = () => {
           id="Prenom"
           type="text"
           onChange={onChangeFirstNameInputHandler}
+          onBlur={onBlurFirstNameHandler}
         ></input>
       </div>
 
