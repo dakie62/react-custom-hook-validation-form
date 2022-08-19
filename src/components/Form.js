@@ -10,8 +10,6 @@ const Form = () => {
   // deriving state
   const isErrorName = validateInput(nameInputState);
   const isErrorFirstName = validateInput(firstNameInputState);
-  console.log(isErrorName);
-  console.log(isErrorFirstName);
 
   const onSubmitForm = (event) => {
     event.preventDefault();
@@ -32,17 +30,33 @@ const Form = () => {
 
   return (
     <form className={styles["form-group"]} onSubmit={onSubmitForm}>
-      <div className={styles["form-control"]}>
+      <div
+        className={
+          isErrorName
+            ? `${styles["form-control"]} ${styles["invalid"]}`
+            : styles["form-control"]
+        }
+      >
         <label htmlFor="Nom">Nom</label>
-        <input id="Nom" onChange={onChangeNameInputHandler}></input>
+        <input id="Nom" type="text" onChange={onChangeNameInputHandler}></input>
       </div>
 
-      <div className={styles["form-control"]}>
+      <div
+        className={
+          isErrorFirstName
+            ? `${styles["form-control"]} ${styles["invalid"]}`
+            : styles["form-control"]
+        }
+      >
         <label htmlFor="Prenom">Prenom</label>
-        <input id="Prenom" onChange={onChangeFirstNameInputHandler}></input>
+        <input
+          id="Prenom"
+          type="text"
+          onChange={onChangeFirstNameInputHandler}
+        ></input>
       </div>
 
-      <div className={styles["form-action"]}>
+      <div type="submit" className={styles["form-action"]}>
         <button>Validate</button>
       </div>
     </form>

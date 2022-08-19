@@ -15,9 +15,3 @@ code {
 * {
   box-sizing: border-box;
 }
-
-input {
-  border-radius: 5px;
-  border-style: 1px solid rgb(189, 46, 46);
-  padding: 0.5em;
-}
