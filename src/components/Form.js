@@ -1,45 +1,32 @@
-import { useState } from "react";
+import useInput from "../hooks/use-input";
 import styles from "./Form.module.css";
 
-const validateInput = (str) => str.trim().length === 0;
-
 const Form = () => {
-  const [nameInputState, setNameInput] = useState("");
-  const [firstNameInputState, setFirstNameInput] = useState("");
+  const {
+    value: nameInputState,
+    isError: isErrorName,
+    onChangeInputHandler: onChangeNameInputHandler,
+    onBlurInputHandler: onBlurNameHandler,
+  } = useInput();
 
-  const [isNameTouched, setNameTouched] = useState(false);
-  const [isFirstNameTouched, setFirstNameTouched] = useState(false);
-
-  // deriving state
-  const isErrorName = validateInput(nameInputState) && isNameTouched;
-  const isErrorFirstName =
-    validateInput(firstNameInputState) && isFirstNameTouched;
+  const {
+    value: firstNameInputState,
+    isError: isErrorFirstName,
+    onChangeInputHandler: onChangeFirstNameInputHandler,
+    onBlurInputHandler: onBlurFirstNameHandler,
+  } = useInput();
 
   const onSubmitForm = (event) => {
     event.preventDefault();
     if (isErrorName || isErrorFirstName) {
       alert("Formulaire invalide");
     }
-    console.log("Mon formulaire est valide");
+    alert(
+      "Félicitations, vous avez effectué un custom hook pour validation de formulaire"
+    );
     console.log("Sending", nameInputState, firstNameInputState);
   };
 
-  const onChangeNameInputHandler = (event) => {
-    setNameInput(event.target.value);
-  };
-
-  const onChangeFirstNameInputHandler = (event) => {
-    setFirstNameInput(event.target.value);
-  };
-
-  const onBlurNameHandler = (event) => {
-    setNameTouched(true);
-  };
-
-  const onBlurFirstNameHandler = (event) => {
-    setFirstNameTouched(true);
-  };
-  
   return (
     <form className={styles["form-group"]} onSubmit={onSubmitForm}>
       <div
@@ -56,6 +43,9 @@ const Form = () => {
           onChange={onChangeNameInputHandler}
           onBlur={onBlurNameHandler}
         ></input>
+        {isErrorName && (
+          <p className={styles["error-text"]}>Le nom est requis</p>
+        )}
       </div>
 
       <div
@@ -72,6 +62,9 @@ const Form = () => {
           onChange={onChangeFirstNameInputHandler}
           onBlur={onBlurFirstNameHandler}
         ></input>
+        {isErrorFirstName && (
+          <p className={styles["error-text"]}>Le prenom est requis</p>
+        )}
       </div>
 
       <div type="submit" className={styles["form-action"]}>
